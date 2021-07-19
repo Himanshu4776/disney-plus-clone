@@ -5,7 +5,7 @@ import { wrap } from 'yargs';
 function Viewers() {
     return (
         <Container>
-            <Wrap style={{backgroundImage:`url(${'./videos/1564674844-disney.mp4'})`}}>
+            <Wrap>
                 <img src = "/images/viewers-disney.png"></img>
             </Wrap>
             <Wrap>
