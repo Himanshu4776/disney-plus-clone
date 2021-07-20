@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components';
-import { wrap } from 'yargs';
 
 function Viewers() {
     return (
@@ -50,7 +49,7 @@ img {
 // It means tag:hover.
 
 &:hover {
-    transform: scale(1.5);
+    transform: scale(1.25);
     border-color: rgba(249, 249, 249, 0.8);
 }
 `
