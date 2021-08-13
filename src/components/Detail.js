@@ -1,37 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import db from "../firebase";
 
 function Detail() {
+    const { id } = useParams();
+    console.log(id);
+    const [movie, setMovie ] = useState()
+    
+    useEffect(() => {
+        // Grab the movies here from DB=
+        db.collection("movies")
+        .doc(id)
+        .get()
+        .then((doc)=>{
+            if(doc.exists)
+            {
+                // save the movie data
+                setMovie(doc.data());
+            }
+            else{
+                // redierect to home page
+            }
+        })
+    }, [])
+    console.log("MOvie is", movie);
+
     return (
         <Container>
-            <Background>
-                <img src="/scale-back.jpeg" />
-            </Background>
-            <Imagetitle>
-                <img src="/scale-front.png" alt="" />
-            </Imagetitle>
-            <Controls>
-                <PlayButton>
-                    <img src="/images/play-icon-black.png" />
-                    <span>PLAY</span>
-                </PlayButton>
-                <TrailerButton>
-                    <img src="/images/play-icon-white.png" />
-                    <span>TRAILER</span>
-                </TrailerButton>
-                <AddButton>
-                    <span>+</span>
-                </AddButton>
-                <GroupWatchButton>
-                    <img src="/images/group-icon.png"></img>
-                </GroupWatchButton>
-            </Controls>
-            <Subtitle>
-                2018 <span>&bull;</span> 7m <span>&bull;</span> Family, Fantasy, Kids, Animation
-            </Subtitle>
-            <Description>
-                A chinese mom who's sad to see when her grown son leaves gets another chane at motherhood when one of her dumplings springs to life. But she finds that nothing stays cute and small forever.
-            </Description>
+            {movie &&(
+                <>
+                    <Background>
+                        <img src={movie.backgroundImg} />
+                    </Background>
+                    <Imagetitle>
+                        <img src={movie.titleImg} alt="" />
+                    </Imagetitle>
+                    <Controls>
+                        <PlayButton>
+                            <img src="/images/play-icon-black.png" />
+                            <span>PLAY</span>
+                        </PlayButton>
+                        <TrailerButton>
+                            <img src="/images/play-icon-white.png" />
+                            <span>TRAILER</span>
+                        </TrailerButton>
+                        <AddButton>
+                            <span>+</span>
+                        </AddButton>
+                        <GroupWatchButton>
+                            <img src="/images/group-icon.png"></img>
+                        </GroupWatchButton>
+                    </Controls>
+                    <Subtitle>
+                        {movie.subTitle}
+                    </Subtitle>
+                    <Description>
+                        {movie.description}
+                    </Description>
+                </>
+            )}
         </Container>
     )
 }
